@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="CustomOreGenerator:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/CustomOreGenerator_jar</output-path>
-    <root id="archive" name="CustomOreGenerator.jar">
-      <element id="module-output" name="CustomOreGenerator" />
-    </root>
-  </artifact>
-</component>
