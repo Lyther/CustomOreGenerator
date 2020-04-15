@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.infury.CustomOreGenerator;
+import org.infury.lang.ConsoleSender;
 
 import java.io.File;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class GenerateOre {
 				double current = levels.getInt(currentLevel + "." + b);
 				if (Math.random() < current / total) {
 					Material type = Material.getMaterial(b.toUpperCase());
-					if (type == null) Console.log("&cERROR: wrong configuration: " + b + " doesn't exists.");
+					if (type == null) ConsoleSender.log("&cERROR: wrong configuration: " + b + " doesn't exists.");
 					else block.setType(type);
 					return true;
 				}
@@ -51,7 +52,7 @@ public class GenerateOre {
 			return blockLevel.get(block.getLocation());
 		else {
 			Player player = findClosetPlayer();
-			if (plugin.getConfig().getBoolean("debug")) Console.log("Debug: find player " + player.getName());
+			if (plugin.getConfig().getBoolean("debug")) ConsoleSender.log("Debug: find player " + player.getName());
 			if (player == null) return null;
 			level = playerLevel.get(player);
 			blockLevel.put(block.getLocation(), level);

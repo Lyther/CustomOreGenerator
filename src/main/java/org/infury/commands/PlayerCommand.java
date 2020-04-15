@@ -8,7 +8,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.infury.CustomOreGenerator;
-import org.infury.api.Console;
+import org.infury.lang.ConsoleSender;
+import org.infury.lang.Message;
+import org.infury.lang.PlayerSender;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,31 +27,54 @@ public class PlayerCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (!(sender instanceof Player)) {
-			Console.log("This command can only be executed by players!");
+			ConsoleSender.log(Message.ONLY_PLAYER);
 			return false;
 		}
 		if (args.length < 1) {
-			sender.sendMessage("Usage:");
-			sender.sendMessage("oregen set <level>: set your ore generator's level.");
-			sender.sendMessage("oregen remove: clear your ore generator settings.");
+			PlayerSender.send(sender, Message.HELP);
 			return true;
 		}
 		if (args[0].equals("set")) {
-			if (!validLevels.contains(args[1])) {
-				sender.sendMessage("The level you choose doesn't exist!");
+			if (!sender.hasPermission("oregen.set." + args[1])) {
+				PlayerSender.warn(sender, Message.NO_PERMISSION);
 				return false;
-			} else if (!sender.hasPermission("oregen.set." + args[1])) {
-				sender.sendMessage("You don't have permission to run this command!");
+			} else if (!validLevels.contains(args[1])) {
+				PlayerSender.warn(sender, Message.NOT_EXIST);
 				return false;
 			}
 			playerLevel.put(((Player) sender).getPlayer(), args[1]);
 			blockLevel.clear();
-			sender.sendMessage("Ore generator level set success!");
+			PlayerSender.send(sender, Message.SET);
 			return true;
 		} else if (args[0].equals("remove")) {
+			if (!sender.hasPermission("oregen.remove")) {
+				PlayerSender.warn(sender, Message.NO_PERMISSION);
+			}
 			playerLevel.remove(((Player) sender).getPlayer());
 			blockLevel.clear();
-			sender.sendMessage("You have cancelled your ore generator level.");
+			PlayerSender.send(sender, Message.REMOVE);
+			return true;
+		} else if (args[0].equals("buy")) {
+			if (!sender.hasPermission("oregen.buy." + args[1])) {
+				PlayerSender.warn(sender, Message.NO_PERMISSION);
+				return false;
+			}
+			// TODO: buy logic
+			return true;
+		} else if (args[0].equals("upgrade")) {
+			if (!sender.hasPermission("oregen.upgrade." + args[1])) {
+				PlayerSender.warn(sender, Message.NO_PERMISSION);
+				return false;
+			}
+			// TODO: upgrade logic
+			return true;
+		} else if (args[0].equals("reload")) {
+			if (!sender.hasPermission("oregen.reload")) {
+				PlayerSender.warn(sender, Message.NO_PERMISSION);
+				return false;
+			}
+			plugin.reloadConfig();
+			PlayerSender.send(sender, Message.RELOAD);
 			return true;
 		}
 		return false;
@@ -66,7 +91,7 @@ public class PlayerCommand implements CommandExecutor {
 				results.add(result);
 			}
 		}
-		if (plugin.getConfig().getBoolean("debug")) Console.log("Debug: current levels: " + results.toString());
+		if (plugin.getConfig().getBoolean("debug")) ConsoleSender.log("Debug: current levels: " + results.toString());
 		return results;
 	}
 }
