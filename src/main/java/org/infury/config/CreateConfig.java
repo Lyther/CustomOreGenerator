@@ -4,8 +4,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.infury.CustomOreGenerator;
 import org.infury.lang.ConsoleSender;
+import org.infury.lang.Message;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class CreateConfig {
 
 	private static void initialLevels() {
 		try {
-			FileConfiguration levels = YamlConfiguration.loadConfiguration(getFilePath("levels.yml"));
+			FileConfiguration levels = YamlConfiguration.loadConfiguration(ConfigFactory.getFile("levels.yml"));
 			levels.addDefault("levels.ore.level-1.dirt", 50);
 			levels.addDefault("levels.ore.level-1.diamond_ore", 50);
 			levels.addDefault("levels.ore.level-1.stone", 50);
@@ -29,7 +29,7 @@ public class CreateConfig {
 			levels.addDefault("levels.other.some-name.stone", 20);
 			levels.addDefault("levels.other.some-name.glass", 25);
 			levels.options().copyDefaults(true);
-			levels.save(getFilePath("levels.yml"));
+			levels.save(ConfigFactory.getFile("levels.yml"));
 		} catch (IOException ex) {
 			ConsoleSender.log("&cERROR: cannot save config to levels.yml");
 		}
@@ -50,7 +50,7 @@ public class CreateConfig {
 
 	private static void initialLang() {
 		try {
-			FileConfiguration lang = YamlConfiguration.loadConfiguration(getFilePath("lang.yml"));
+			FileConfiguration lang = YamlConfiguration.loadConfiguration(ConfigFactory.getFile("lang.yml"));
 			lang.addDefault("set", "Generator level set success!");
 			lang.addDefault("remove", "Removed your generator's level.");
 			lang.addDefault("no_permission", "You don't have the permission to run this command!");
@@ -63,14 +63,12 @@ public class CreateConfig {
 			lang.addDefault("help", help);
 			lang.addDefault("only_player", "This command can only run by a player.");
 			lang.addDefault("reload", "Plugin configuration reload success!");
+			lang.addDefault("no_such_command", "This command doesn't exist!");
 			lang.options().copyDefaults(true);
-			lang.save(getFilePath("lang.yml"));
+			lang.save(ConfigFactory.getFile("lang.yml"));
+			Message.setMessage();
 		} catch (IOException ex) {
 			ConsoleSender.log("&cERROR: cannot save to lang.yml");
 		}
-	}
-
-	private static File getFilePath(String name) {
-		return new File("./plugins/CustomOreGenerator/" + name);
 	}
 }

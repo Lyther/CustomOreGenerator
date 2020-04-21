@@ -68,6 +68,12 @@ public class PlayerCommand implements CommandExecutor {
 			}
 			// TODO: upgrade logic
 			return true;
+		} else if (args[0].equals("list")) {
+			if (!sender.hasPermission("oregen.list")) {
+				PlayerSender.warn(sender, Message.NO_PERMISSION);
+				return false;
+			}
+			// TODO: list levels
 		} else if (args[0].equals("reload")) {
 			if (!sender.hasPermission("oregen.reload")) {
 				PlayerSender.warn(sender, Message.NO_PERMISSION);
@@ -76,6 +82,8 @@ public class PlayerCommand implements CommandExecutor {
 			plugin.reloadConfig();
 			PlayerSender.send(sender, Message.RELOAD);
 			return true;
+		} else {
+			PlayerSender.warn(sender, Message.NO_SUCH_COMMAND);
 		}
 		return false;
 	}

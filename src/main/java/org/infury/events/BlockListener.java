@@ -7,9 +7,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFormEvent;
 import org.infury.CustomOreGenerator;
-import org.infury.lang.ConsoleSender;
 import org.infury.api.FindNearby;
 import org.infury.api.GenerateOre;
+import org.infury.lang.ConsoleSender;
 
 import java.util.List;
 
