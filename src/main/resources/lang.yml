@@ -1,0 +1,12 @@
+set: Generator level set success!
+remove: Removed your generator's level.
+no_permission: You don't have the permission to run this command!
+not_exist: This group or level doesn't exist!
+help:
+- 'Usage:'
+- '/oregen set <group>.<level> : set your generator''s level.'
+- '/oregen remove : remove your level and set to default cobblestone generator.'
+- '/oregen reload : reload the config file for plugin.'
+only_player: This command can only run by a player.
+reload: Plugin configuration reload success!
+no_such_command: This command doesn't exist!

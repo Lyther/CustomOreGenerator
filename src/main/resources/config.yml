@@ -1,12 +1,6 @@
-# Enable this to show debug messages.
-debug: false
-
-# The worlds that plugin should take effect.
+debug: true
 enable-worlds:
-  - world
-  - skyblock
-  - other-world
-
-# Plugin searches for players in radius, and make the closet player's level
-# to be this cobble generator's level.
+- world
+- skyblock
+- other-world
 search-radius: 12

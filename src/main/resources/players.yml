@@ -1,0 +1,6 @@
+players:
+  example:
+    level: ore.level-1
+    buy:
+    - ore.level-1
+    - ore.level-2

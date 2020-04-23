@@ -1,18 +1,18 @@
-# The levels should in this format.
-# Groups such like 'ore' and 'other' would be take in use in future.
-# You can add your own groups either.
-# Following level is cobble generator's level.
-# The sum of chance needn't to be exactly 100.
-
 levels:
   ore:
     level-1:
-      dirt: 50
-      diamond_ore: 50
-      stone: 50
+      price: 100
+      blocks:
+        dirt: 50
+        diamond_ore: 50
+        stone: 50
     level-2:
-      diamond_ore: 100
+      price: 200
+      blocks:
+        diamond_ore: 100
   other:
     some-name:
-      stone: 20
-      glass: 25
+      price: 100
+      blocks:
+        stone: 20
+        glass: 25

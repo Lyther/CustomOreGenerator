@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class CustomOreGenerator extends JavaPlugin implements Listener {
 	private static CustomOreGenerator plugin;
-	private static HashMap<Player, String> playerLevel = new HashMap<Player, String>();
+	private static HashMap<String, String> playerLevel = new HashMap<String, String>();
 	private static HashMap<Location, String> blockLevel = new HashMap<Location, String>();
 
 	@Override
@@ -32,8 +32,7 @@ public class CustomOreGenerator extends JavaPlugin implements Listener {
 		return plugin;
 	}
 
-
-	public static HashMap<Player, String> getPlayerLevel() {
+	public static HashMap<String, String> getPlayerLevel() {
 		return playerLevel;
 	}
 

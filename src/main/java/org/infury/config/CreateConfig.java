@@ -3,6 +3,7 @@ package org.infury.config;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.infury.CustomOreGenerator;
+import org.infury.api.Player;
 import org.infury.lang.ConsoleSender;
 import org.infury.lang.Message;
 
@@ -17,17 +18,21 @@ public class CreateConfig {
 		initialLevels();
 		initialConfig();
 		initialLang();
+		initialPlayers();
 	}
 
 	private static void initialLevels() {
 		try {
 			FileConfiguration levels = YamlConfiguration.loadConfiguration(ConfigFactory.getFile("levels.yml"));
-			levels.addDefault("levels.ore.level-1.dirt", 50);
-			levels.addDefault("levels.ore.level-1.diamond_ore", 50);
-			levels.addDefault("levels.ore.level-1.stone", 50);
-			levels.addDefault("levels.ore.level-2.diamond_ore", 100);
-			levels.addDefault("levels.other.some-name.stone", 20);
-			levels.addDefault("levels.other.some-name.glass", 25);
+			levels.addDefault("levels.ore.level-1.price", 100);
+			levels.addDefault("levels.ore.level-1.blocks.dirt", 50);
+			levels.addDefault("levels.ore.level-1.blocks.diamond_ore", 50);
+			levels.addDefault("levels.ore.level-1.blocks.stone", 50);
+			levels.addDefault("levels.ore.level-2.price", 200);
+			levels.addDefault("levels.ore.level-2.blocks.diamond_ore", 100);
+			levels.addDefault("levels.other.some-name.price", 100);
+			levels.addDefault("levels.other.some-name.blocks.stone", 20);
+			levels.addDefault("levels.other.some-name.blocks.glass", 25);
 			levels.options().copyDefaults(true);
 			levels.save(ConfigFactory.getFile("levels.yml"));
 		} catch (IOException ex) {
@@ -54,7 +59,7 @@ public class CreateConfig {
 			lang.addDefault("set", "Generator level set success!");
 			lang.addDefault("remove", "Removed your generator's level.");
 			lang.addDefault("no_permission", "You don't have the permission to run this command!");
-			lang.addDefault("not_exist", "This level doesn't exist!");
+			lang.addDefault("not_exist", "This group or level doesn't exist!");
 			List<String> help = new ArrayList<String>();
 			help.add("Usage:");
 			help.add("/oregen set <group>.<level> : set your generator's level.");
@@ -69,6 +74,22 @@ public class CreateConfig {
 			Message.setMessage();
 		} catch (IOException ex) {
 			ConsoleSender.log("&cERROR: cannot save to lang.yml");
+		}
+	}
+
+	private static void initialPlayers() {
+		try {
+			FileConfiguration players = YamlConfiguration.loadConfiguration(ConfigFactory.getFile("players.yml"));
+			players.addDefault("players.a55fff79-11f1-4e7d-abd9-8d822cbe5d1c.level", "ore.level-1");
+			List<String> buy = new ArrayList<String>();
+			buy.add("ore.level-1");
+			buy.add("ore.level-2");
+			players.addDefault("players.a55fff79-11f1-4e7d-abd9-8d822cbe5d1c.buy", buy);
+			players.options().copyDefaults(true);
+			players.save(ConfigFactory.getFile("players.yml"));
+			Player.setPlayerLevel();
+		} catch (IOException ex) {
+			ConsoleSender.log("&cERROR: cannot save to players.yml");
 		}
 	}
 }
